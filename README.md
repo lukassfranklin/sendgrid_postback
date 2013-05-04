@@ -17,7 +17,7 @@ ActionDispatch is patched (see action_dispatch_ext.rb) to handle the "invalid" i
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'sendgrid_postback', git: "git://github.com/aceofspades/sendgrid_postback.git"
+gem 'sendgrid_postback', git: "git://github.com/lukassfranklin/sendgrid_postback.git"
 ```
 
 You'll need to configure your SendGrid account to enable the Event API.

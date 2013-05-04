@@ -19,11 +19,13 @@ module SendgridPostback
     attr_accessor :request_path
     attr_accessor :enable_interceptor
     attr_accessor :require_ssl
+    attr_accessor :insert_events_separately
 
     def initialize
       #@report_exception = proc { |exc| }
       enable_interceptor = true
       require_ssl = true
+      insert_event_separately = true
     end
   end
 

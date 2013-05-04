@@ -9,6 +9,7 @@ module SendgridPostback
     attr_accessor :sendgrid_state
 
     def post_sendgrid_event event_data
+      # TODO: decompose events into a single event and capture timestamp and state for each event
       SendgridPostback.logger.info "Posted event data #{event_data.inspect}"
       sendgrid_events ||= []
       sendgrid_events << event_data
