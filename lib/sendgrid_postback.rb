@@ -30,7 +30,7 @@ module SendgridPostback
   end
 
   class << self
-    delegate :logger, to: :config
+    delegate :logger, :to => :config
 
     def configure &block
       yield config

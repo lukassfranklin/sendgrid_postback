@@ -12,7 +12,7 @@ module ActionDispatch
         begin
           request = Request.new(env)
           parser = ::Yajl::Parser.new
-          data = {events: []}
+          data = {:events => []}
           parser.on_parse_complete = lambda {|rec|
             data[:events] << rec.with_indifferent_access
           }

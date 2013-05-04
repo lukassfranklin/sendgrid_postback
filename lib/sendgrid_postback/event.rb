@@ -2,15 +2,15 @@ module SendgridPostback
   class Event
 
     ORDER = {
-      processed: 1,
-      dropped: 1,
-      deferred: 1,
-      delivered: 2,
-      bounce: 2,
-      open: 3,
-      click: 4,
-      unsubscribe: 4,
-      spamreport: 4
+      :processed => 1,
+      :dropped => 1,
+      :deferred => 1,
+      :delivered => 2,
+      :bounce => 2,
+      :open => 3,
+      :click => 4,
+      :unsubscribe => 4,
+      :spamreport => 4
     }
 
     def self.order(val)

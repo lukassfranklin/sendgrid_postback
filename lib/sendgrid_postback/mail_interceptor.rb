@@ -36,7 +36,7 @@ module SendgridPostback
     end
 
     def self.sendgrid_header uuid
-      {unique_args: {uuid: uuid}}.to_json
+      {:unique_args => {:uuid => uuid}}.to_json
     end
 
     def self.generate_uuid
