@@ -12,7 +12,7 @@ module SendgridPostback
           mail_postback.event = event.delete("event") if event["event"]
           mail_postback.event_at = event.delete("timestamp") if event["timestamp"]
           mail_postback.recipient = event.delete("email") if event["email"]
-          mail_postback.categories = event.delete("category") if event["category"]
+          mail_postback.categories = event.delete("category") if event["category"] #This could be string or array
           mail_postback.attempt = event.delete("attempt").to_i if event["attempt"]
           mail_postback.url_clicked = event.delete("url") if event["url"]
           mail_postback.reason = event.delete("reason") if event["reason"]
@@ -20,9 +20,7 @@ module SendgridPostback
           mail_postback.response = event.delete("response") if event["response"]
           mail_postback.status = event.delete("status") if event["status"]
           mail_postback.unique_ids = event #dump the rest of the hash into unique ids
-
-
-          
+          mail_postback.save! # Blow an exception for now to aid debugging
         end
       end
     end

@@ -13,23 +13,28 @@ class SendgridPostback::EventsController < ActionController::Metal
       self.status = :bad_request
       return
     end
-
-    parse_send_grid_events do |data|            
-      receiver = SendgridPostback.config.find_receiver_by_uuid.call(data[:uuid]) if data[:uuid]
+    if SendgridPostback.config.insert_events_separately
+      receiver = SendgridPostback.config.receiver
+      receiver.post_sendgrid_event(params[:events])
+      self.response_body=''
+    else
+      parse_send_grid_events do |data|            
+        receiver = SendgridPostback.config.find_receiver_by_uuid.call(data[:uuid]) if data[:uuid]
       
-      if receiver.blank?
-        general_receiver = SendgridPostback.config.get_general_event_receiver.call
+        if receiver.blank?
+          general_receiver = SendgridPostback.config.get_general_event_receiver.call
         
-        if general_receiver.blank?
-          SendgridPostback.config.report_exception.call("SendgridPostback postback: Notification UUID(#{data[:uuid]}) not found.")
+          if general_receiver.blank?
+            SendgridPostback.config.report_exception.call("SendgridPostback postback: Notification UUID(#{data[:uuid]}) not found.")
+          else
+            general_receiver.send(:post_general_sendgrid_event, data)
+          end
         else
-          general_receiver.send(:post_general_sendgrid_event, data)
+          receiver.send(:post_sendgrid_event, data)
         end
-      else
-        receiver.send(:post_sendgrid_event, data)
       end
+      self.response_body = ''
     end
-    self.response_body = ''
   rescue => exc
     SendgridPostback.config.report_exception.call(exc)
     self.response_body = ''
