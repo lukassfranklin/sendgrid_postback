@@ -20,6 +20,7 @@ module SendgridPostback
     attr_accessor :enable_interceptor
     attr_accessor :require_ssl
     attr_accessor :insert_events_separately
+    attr_accessor :receiver #If insert_events_separately is true, we need a receiver class vs an instance
 
     def initialize
       #@report_exception = proc { |exc| }
