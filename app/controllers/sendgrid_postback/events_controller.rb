@@ -22,10 +22,11 @@ class SendgridPostback::EventsController < ActionController::Metal
         receiver = SendgridPostback.config.find_receiver_by_uuid.call(data[:uuid]) if data[:uuid]
       
         if receiver.blank?
-          general_receiver = SendgridPostback.config.get_general_event_receiver.call
+          general_receiver = SendgridPostback.config.get_general_event_receiver.call if SendgridPostback.config.get_general_event_receiver
         
           if general_receiver.blank?
-            SendgridPostback.config.report_exception.call("SendgridPostback postback: Notification UUID(#{data[:uuid]}) not found.")
+            SendgridPostback.config.report_exception.call("SendgridPostback postback: Notification UUID(#{data[:uuid]}) not found.") if SendgridPostback.config.report_exception
+            SendgridPostback.logger.info "SendgridPostback postback: Notification UUID(#{data[:uuid]}) not found." unless SendgridPostback.config.report_exception
           else
             general_receiver.send(:post_general_sendgrid_event, data)
           end
@@ -36,7 +37,8 @@ class SendgridPostback::EventsController < ActionController::Metal
       self.response_body = ''
     end
   rescue => exc
-    SendgridPostback.config.report_exception.call(exc)
+    SendgridPostback.config.report_exception.call(exc) if SendgridPostback.config.report_exception
+    SendgridPostback.logger.info("#{exc.to_s}") unless SendgridPostback.config.report_exception
     self.response_body = ''
     self.status = :internal_server_error
   end
