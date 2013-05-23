@@ -45,4 +45,4 @@ end
 
 require 'sendgrid_postback/engine'
 require 'sendgrid_postback/action_dispatch_ext'
-require "sendgrid_postback/version" unless SendgridPostback::VERSION
+require 'sendgrid_postback/version'
