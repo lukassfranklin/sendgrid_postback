@@ -13,7 +13,7 @@ class SendgridPostback::EventsController < ActionController::Metal
       self.status = :bad_request
       return
     end
-    if SendgridPostback.config.insert_events_separately
+    if SendgridPostback.config.insert_events_separately && params[:events].present?
       receiver = SendgridPostback.config.receiver
       receiver.post_sendgrid_event(params[:events])
       self.response_body=''
