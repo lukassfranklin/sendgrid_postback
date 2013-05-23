@@ -1,4 +1,4 @@
-require "sendgrid_postback/version" unless SendgridPostback::VERSION
+require "sendgrid_postback/version"
 
 module SendgridPostback
 
