@@ -24,9 +24,9 @@ module SendgridPostback
 
     def initialize
       #@report_exception = proc { |exc| }
-      enable_interceptor = true
-      require_ssl = true
-      insert_event_separately = true
+      enable_interceptor ||= true
+      require_ssl ||= true
+      insert_event_separately ||= false
     end
   end
 
