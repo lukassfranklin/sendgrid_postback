@@ -1,5 +1,6 @@
 require 'mail'
 require 'mail/message'
+require 'uuidtools'
 
 module SendgridPostback
 
